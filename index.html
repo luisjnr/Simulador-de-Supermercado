@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#111827" />
+    <meta name="description" content="Simulador econômico de supermercado em pixel art." />
+    <title>Mercado Tycoon — Simulador de Supermercado</title>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand-lockup">
+          <div class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></div>
+          <div>
+            <div class="brand-name">MERCADO <b>TYCOON</b></div>
+            <div class="brand-subtitle">SIMULADOR DE GESTÃO</div>
+          </div>
+        </div>
+        <div class="topbar-right">
+          <div class="day-chip"><span class="chip-dot"></span><span id="day-label">DIA 01</span></div>
+          <div class="phase-chip" id="phase-label">PREPARAÇÃO</div>
+        </div>
+      </header>
+
+      <main>
+        <section class="stats-grid" aria-label="Indicadores do supermercado">
+          <article class="stat-card cash-card">
+            <div class="stat-icon">¤</div>
+            <div class="stat-copy"><span class="stat-label">SALDO EM CAIXA</span><strong id="cash-value">1.600,00</strong><small>Moeda do mercado</small></div>
+            <span class="stat-trend" id="cash-state">ESTÁVEL</span>
+          </article>
+          <article class="stat-card">
+            <div class="stat-icon clock-icon">◷</div>
+            <div class="stat-copy"><span class="stat-label">HORÁRIO</span><strong id="clock-value">08:00</strong><small id="clock-subtitle">Mercado fechado</small></div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-icon people-icon">♙</div>
+            <div class="stat-copy"><span class="stat-label">CLIENTES NA LOJA</span><strong id="customers-value">0</strong><small id="customers-subtitle">0 atendidos hoje</small></div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-icon queue-icon">▤</div>
+            <div class="stat-copy"><span class="stat-label">FILA DOS CAIXAS</span><strong id="queue-value">0</strong><small id="register-subtitle">1 caixa ativo</small></div>
+          </article>
+        </section>
+
+        <section class="workspace">
+          <section class="market-card">
+            <div class="panel-heading market-heading">
+              <div><span class="eyebrow">MAPA DO ESTABELECIMENTO</span><h1>Visão do supermercado</h1></div>
+              <div class="live-indicator" id="live-indicator"><span></span> MERCADO FECHADO</div>
+            </div>
+            <div class="game-stage">
+              <div id="game-container" aria-label="Supermercado em pixel art"></div>
+              <div class="stage-caption"><span><i class="legend-dot shelf-dot"></i> Gôndolas selecionáveis</span><span><i class="legend-dot npc-dot"></i> Clientes</span><span class="stage-hint">Clique nas gôndolas para gerenciar · libere novas categorias em Melhorias</span></div>
+            </div>
+            <div class="market-footer">
+              <div class="footer-tip"><span class="tip-icon">i</span><span id="market-message">Prepare os preços e o estoque antes de abrir o mercado.</span></div>
+              <button class="primary-button" id="phase-action">Abrir mercado <span>→</span></button>
+            </div>
+          </section>
+
+          <aside class="control-column">
+            <section class="side-card product-card">
+              <div class="panel-heading compact-heading"><div><span class="eyebrow">CATÁLOGO DO SETOR</span><h2>Setor selecionado</h2></div><span class="shelf-tag" id="shelf-number">01</span></div>
+              <div class="product-identity"><div class="product-symbol" id="product-symbol">▦</div><div><h3 id="product-name">Mercearia Essencial</h3><span id="product-category" class="category-pill essencial">ESSENCIAL</span><small class="product-detail" id="product-detail">Grãos, massas e alimentos básicos</small></div></div>
+              <div id="product-list" class="catalog-list" aria-live="polite"></div>
+              <p class="locked-note" id="edit-note">Cada produto possui preço e estoque independentes. Altere os valores durante a preparação.</p>
+            </section>
+            <section class="side-card upgrade-card">
+              <div class="panel-heading compact-heading"><div><span class="eyebrow">INVESTIMENTOS</span><h2>Melhorias</h2></div><span class="upgrade-icon">↗</span></div>
+              <div class="upgrade-row"><div class="upgrade-symbol">▣</div><div class="upgrade-copy"><b>Contratar operador</b><span>Adiciona um caixa e reduz filas.</span><small>+ ¤ 75,00 de custo diário</small></div><button class="buy-button" id="hire-button"><b>¤ 320</b><small>CONTRATAR</small></button></div>
+              <div class="upgrade-row premium-upgrade"><div class="upgrade-symbol normal-symbol">▤</div><div class="upgrade-copy"><b>Liberar Lanches e Bebidas</b><span>Desbloqueia os setores Lanches e Biscoitos e Bebidas, com três produtos em cada.</span><small>12 unidades de cada incluídas</small></div><button class="buy-button" id="unlock-normal-button"><b>¤ 350</b><small>LIBERAR</small></button></div>
+              <div class="upgrade-row premium-upgrade"><div class="upgrade-symbol premium-symbol">◆</div><div class="upgrade-copy"><b>Liberar Mercearia Premium</b><span>Desbloqueia cafés especiais, azeites e chocolates premium.</span><small>12 unidades de cada produto incluídas</small></div><button class="buy-button" id="unlock-premium-button"><b>¤ 450</b><small>LIBERAR</small></button></div>
+              <div class="upgrade-row premium-upgrade"><div class="upgrade-symbol" style="color:#e9b66f;background:rgba(233,182,111,.12)">♨</div><div class="upgrade-copy"><b>Construir padaria</b><span>Pães e itens de padaria.</span><small>12 unidades de cada produto incluídas</small></div><button class="buy-button" id="unlock-bakery-button"><b>¤ 300</b><small>LIBERAR</small></button></div>
+              <div class="upgrade-row premium-upgrade"><div class="upgrade-symbol" style="color:#8ed2e4;background:rgba(112,181,214,.12)">🥛</div><div class="upgrade-copy"><b>Setor de laticínios</b><span>Iogurtes e bebidas lácteas.</span><small>12 unidades de cada produto incluídas</small></div><button class="buy-button" id="unlock-yogurt-button"><b>¤ 275</b><small>LIBERAR</small></button></div>
+              <div class="upgrade-row premium-upgrade"><div class="upgrade-symbol" style="color:#9dd9e9;background:rgba(112,181,214,.12)">❄</div><div class="upgrade-copy"><b>Freezer de carnes</b><span>Carnes bovinas, frango e linguiça.</span><small>12 unidades de cada produto incluídas</small></div><button class="buy-button" id="unlock-freezer-button"><b>¤ 400</b><small>LIBERAR</small></button></div>
+              <div class="upgrade-row premium-upgrade"><div class="upgrade-symbol premium-symbol">✦</div><div class="upgrade-copy"><b>Setor de sorvetes</b><span>Picolés, potes e sobremesas geladas.</span><small>12 unidades de cada produto incluídas</small></div><button class="buy-button" id="unlock-icecream-button"><b>¤ 350</b><small>LIBERAR</small></button></div>
+              <div class="upgrade-foot" id="upgrade-note">Clique em um setor para editar preços e estoques individuais</div>
+            </section>
+
+            <section class="side-card activity-card">
+              <div class="panel-heading compact-heading"><div><span class="eyebrow">ACONTECIMENTOS</span><h2>Registro do dia</h2></div><span class="activity-live">● AO VIVO</span></div>
+              <div class="activity-list" id="activity-list"><div class="empty-activity"><span>◇</span><p>Nenhuma atividade ainda.<br/>Abra o mercado para começar.</p></div></div>
+            </section>
+          </aside>
+        </section>
+
+        <footer class="app-footer"><span>PROTÓTIPO 0.7.8</span><span>SIMULAÇÃO ECONÔMICA · PIXEL ART</span><span>DESENVOLVIDO COM PHASER 4</span></footer>
+      </main>
+    </div>
+
+    <div class="modal-backdrop" id="report-modal" aria-hidden="true">
+      <section class="report-modal" role="dialog" aria-modal="true" aria-labelledby="report-title">
+        <div class="report-topline"><span class="eyebrow">ENCERRAMENTO DO EXPEDIENTE</span><span class="report-day" id="report-day">DIA 01</span></div>
+        <div class="report-icon" id="report-icon">▤</div>
+        <h2 id="report-title">Relatório financeiro</h2>
+        <p id="report-description">Confira o desempenho do supermercado hoje.</p>
+        <div class="report-metrics">
+          <div><span>Receita bruta</span><b id="report-revenue">¤ 0,00</b></div>
+          <div><span>Custos variáveis</span><b id="report-variable">¤ 0,00</b></div>
+          <div><span>Custos fixos</span><b id="report-fixed">¤ 0,00</b></div>
+          <div class="net-row"><span>Lucro / prejuízo do dia</span><b id="report-net">¤ 0,00</b></div>
+        </div>
+        <div class="report-warning" id="report-warning">Dias consecutivos no vermelho: 0 de 3.</div>
+        <button class="primary-button full-button" id="report-action">Avançar para o próximo dia <span>→</span></button>
+      </section>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
